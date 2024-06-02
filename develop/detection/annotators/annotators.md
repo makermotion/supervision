@@ -260,15 +260,53 @@ status: new
 === "Label"
 
     ```python
-     import supervision as sv
+    import supervision as sv
 
     image = ...
     detections = sv.Detections(...)
 
+    labels = [
+        f"{class_name} {confidence:.2f}"
+        for class_name, confidence
+        in zip(detections['class_name'], detections.confidence)
+    ]
+
     label_annotator = sv.LabelAnnotator(text_position=sv.Position.CENTER)
     annotated_frame = label_annotator.annotate(
         scene=image.copy(),
-        detections=detections
+        detections=detections,
+        labels=labels
+    )
+    ```
+
+    <div class="result" markdown>
+
+    ![label-annotator-example](https://media.roboflow.com/supervision-annotator-examples/label-annotator-example-purple.png){ align=center width="800" }
+
+    </div>
+
+=== "RichLabel"
+
+    ```python
+    import supervision as sv
+
+    image = ...
+    detections = sv.Detections(...)
+
+    labels = [
+        f"{class_name} {confidence:.2f}"
+        for class_name, confidence
+        in zip(detections['class_name'], detections.confidence)
+    ]
+
+    rich_label_annotator = sv.RichLabelAnnotator(
+        font_path=".../font.ttf",
+        text_position=sv.Position.CENTER
+    )
+    annotated_frame = label_annotator.annotate(
+        scene=image.copy(),
+        detections=detections,
+        labels=labels
     )
     ```
 
@@ -281,7 +319,7 @@ status: new
 === "Crop"
 
     ```python
-     import supervision as sv
+    import supervision as sv
 
     image = ...
     detections = sv.Detections(...)
@@ -484,6 +522,12 @@ status: new
 </div>
 
 :::supervision.annotators.core.LabelAnnotator
+
+<div class="md-typeset">
+    <h2><a href="#supervision.annotators.core.RichLabelAnnotator">RichLabelAnnotator</a></h2>
+</div>
+
+:::supervision.annotators.core.RichLabelAnnotator
 
 <div class="md-typeset">
     <h2><a href="#supervision.annotators.core.BlurAnnotator">BlurAnnotator</a></h2>
